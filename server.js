@@ -1,13 +1,13 @@
 const express = require('express');
 const path = require('path');
-const Notes = require('./db/db.json');
+const Notes = require('./notetaker/Develop/db/db.json');
 const fs = require('fs');
 
 // Helper method for generating unique ids
-const uuid = require('./helper/uuid');
+const uuid = require('./notetaker/Develop/helper/uuid');
 
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 const app = express();
 
