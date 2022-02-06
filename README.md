@@ -15,7 +15,7 @@ Please install NodeJS before use
 
 You can via clone the Github link: https://github.com/BenLu2/NoteTaker.git
 
-and run npm install, node server.js and open your browser at localhost:3001 to access this app
+and run `npm install`, `node server.js` and open your browser at **localhost:3001** to access this app
 
 Or
 
