@@ -24,7 +24,7 @@ You can visit https://yudong-note-taker.herokuapp.com/notes directly to use this
 ## Demo
 https://www.youtube.com/watch?v=DJtmVrt9Ixo
 
-
+[![Demo Video](http://img.youtube.com/vi/DJtmVrt9Ixo/0.jpg)](http://www.youtube.com/watch?v=DJtmVrt9Ixo)
 
 
 - - -
