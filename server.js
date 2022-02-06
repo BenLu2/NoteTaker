@@ -1,51 +1,40 @@
 const express = require('express');
 const path = require('path');
-const Notes = require('./notetaker/Develop/db/db.json');
+const Notes = require('./db/db.json');
 const fs = require('fs');
 
 // Helper method for generating unique ids
-const uuid = require('./notetaker/Develop/helper/uuid');
+const uuid = require('./helper/uuid');
 
 
 const PORT = process.env.PORT || 3001;
 
 const app = express();
 
-const { url } = require('inspector');
-const { urlencoded } = require('express');
-
 //middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 
-app.use(express.static('./notetaker/Develop/public'));
+app.use(express.static('public'));
 
 //Set up the home page
 app.get('/', (req, res) => 
 {
-    res.sendFile(path.join(__dirname, './notetaker/Develop/public/index.html')) 
+    res.sendFile(path.join(__dirname, './public/index.html')) 
 });
 
 
 //GET request for notes
 app.get('/notes', (req,res) =>
 {
-    res.sendFile(path.join(__dirname, './notetaker/Develop/public/notes.html'))
+    res.sendFile(path.join(__dirname, './public/notes.html'))
 });
 
-//GET route
-// app.get('/api/notes', (req,res) => {
-//       // Send a message to the client
-//   res.status(200).json(`${req.method} request received to get notes`);
-//   // Log our request to the terminal
-//   console.info(`${req.method} request received to get notes`);
-// });
 
 // Setup the /api/notes get route
 app.get("/api/notes", function(req, res) {
   // Read the db.json file and return all saved notes as JSON.
     res.json(Notes);
-    res.render()
     console.info(`${req.method} request received to get notes`);
     });
 
@@ -67,7 +56,7 @@ app.post('/api/notes', (req, res) => {
       };
   
       // Obtain existing notes
-      fs.readFile('./notetaker/Develop/db/db.json', 'utf8', (err, data) => {
+      fs.readFile('./db/db.json', 'utf8', (err, data) => {
         if (err) {
           console.error(err);
         } else {
@@ -79,7 +68,7 @@ app.post('/api/notes', (req, res) => {
   
           // Write updated notes back to the file
           fs.writeFile(
-            './notetaker/Develop/db/db.json',
+            './db/db.json',
             JSON.stringify(parsedNotes, null, 4),
             (writeErr) =>
               writeErr
@@ -99,6 +88,7 @@ app.post('/api/notes', (req, res) => {
     } else {
       res.status(500).json('Error in posting notes');
     }
+    res.render()
   });
   
   app.listen(PORT, () =>
