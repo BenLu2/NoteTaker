@@ -1,20 +1,22 @@
 const express = require('express');
-const path = require('path')
-const Notes = require('./db/db.json')
+const path = require('path');
+const Notes = require('./db/db.json');
 const fs = require('fs');
 
 // Helper method for generating unique ids
 const uuid = require('./helper/uuid');
 
+
+const PORT = 3001;
+
 const app = express();
-const PORT = process.env.PORT || 3001;
-const path = require('path');
+
 const { url } = require('inspector');
 const { urlencoded } = require('express');
 
 //middleware
 app.use(express.json());
-app.use(express/urlencoded({ extended: true}));
+app.use(express.urlencoded({ extended: true}));
 
 app.use(express.static('public'));
 
@@ -44,19 +46,19 @@ app.post('/api/notes', (req, res) => {
     console.info(`${req.method} request received to add a review`);
   
     // Destructuring assignment for the items in req.body
-    const { title, text} = req.body;
+    const {title, text} = req.body;
   
     // If all the required properties are present
     if (title && text) {
       // Variable for the object we will save
-      const newNotes = {
+      const newNote = {
         title,
         text,
         review_id: uuid(),
       };
   
       // Obtain existing reviews
-      fs.readFile('./db/reviews.json', 'utf8', (err, data) => {
+      fs.readFile('./db/db.json', 'utf8', (err, data) => {
         if (err) {
           console.error(err);
         } else {
@@ -64,12 +66,12 @@ app.post('/api/notes', (req, res) => {
           const parsedNotes = JSON.parse(data);
   
           // Add a new review
-          parsedNotes.push(newNotes);
+          parsedNotes.push(newNote);
   
           // Write updated reviews back to the file
           fs.writeFile(
-            './db/reviews.json',
-            JSON.stringify(parsedReviews, null, 4),
+            './db/db.json',
+            JSON.stringify(parsedNotes, null, 4),
             (writeErr) =>
               writeErr
                 ? console.error(writeErr)
@@ -80,7 +82,7 @@ app.post('/api/notes', (req, res) => {
   
       const response = {
         status: 'success',
-        body: newNotes,
+        body: newNote,
       };
   
       console.log(response);
