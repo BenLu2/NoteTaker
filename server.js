@@ -20,10 +20,12 @@ app.use(express.urlencoded({ extended: true}));
 
 app.use(express.static('./notetaker/Develop/public'));
 
+//Set up the home page
 app.get('/', (req, res) => 
 {
     res.sendFile(path.join(__dirname, './notetaker/Develop/public/index.html')) 
 });
+
 
 //GET request for notes
 app.get('/notes', (req,res) =>
@@ -32,13 +34,20 @@ app.get('/notes', (req,res) =>
 });
 
 //GET route
-app.get('/api/notes', (req,res) => {
-      // Send a message to the client
-  res.status(200).json(`${req.method} request received to get notes`);
+// app.get('/api/notes', (req,res) => {
+//       // Send a message to the client
+//   res.status(200).json(`${req.method} request received to get notes`);
+//   // Log our request to the terminal
+//   console.info(`${req.method} request received to get notes`);
+// });
 
-  // Log our request to the terminal
-  console.info(`${req.method} request received to get notes`);
-});
+// Setup the /api/notes get route
+app.get("/api/notes", function(req, res) {
+  // Read the db.json file and return all saved notes as JSON.
+    res.json(Notes);
+    res.render()
+    console.info(`${req.method} request received to get notes`);
+    });
 
 // POST request to add a note
 app.post('/api/notes', (req, res) => {
