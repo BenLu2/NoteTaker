@@ -24,13 +24,6 @@ app.get('/', (req, res) =>
 });
 
 
-//GET request for notes
-app.get('/notes', (req,res) =>
-{
-    res.sendFile(path.join(__dirname, './public/notes.html'))
-});
-
-
 // Setup the /api/notes get route
 app.get("/api/notes", function(req, res) {
   // Read the db.json file and return all saved notes as JSON.
@@ -38,6 +31,11 @@ app.get("/api/notes", function(req, res) {
     console.info(`${req.method} request received to get notes`);
     });
 
+    //GET request for notes
+app.get('/notes', (req,res) =>
+{
+    res.sendFile(path.join(__dirname, './public/notes.html'))
+});
 // POST request to add a note
 app.post('/api/notes', (req, res) => {
     // Log that a POST request was received
@@ -88,9 +86,23 @@ app.post('/api/notes', (req, res) => {
     } else {
       res.status(500).json('Error in posting notes');
     }
-    res.render()
   });
+
+  app.delete("/api/notes/:id", function(req, res) {
+    Notes.splice(req.params.id, 1);
+    updateDb();
+    console.log("Deleted note with id "+req.params.id);
+});
   
+//updates the json file whenever a note is added or deleted
+  function updateDb() {
+    fs.writeFile("db/db.json",JSON.stringify(Notes,'\t'),err => {
+              if (err) throw err;
+              return true;
+          });
+      }
+
+
   app.listen(PORT, () =>
     console.log(`App listening at http://localhost:${PORT} 🚀`)
   );
