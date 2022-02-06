@@ -23,26 +23,26 @@ app.get('/', (req, res) =>
     res.sendFile(path.join(__dirname, './public/index.html')) 
 });
 
+//GET request for notes
+app.get('/notes', (req,res) =>
+{
+    res.sendFile(path.join(__dirname, './public/notes.html'))
+});
 
 // Setup the /api/notes get route
-app.get("/api/notes", function(req, res) {
+app.get("/api/notes", (req, res) => {
   // Read the db.json file and return all saved notes as JSON.
     res.json(Notes);
     console.info(`${req.method} request received to get notes`);
     });
 
-    //GET request for notes
-app.get('/notes', (req,res) =>
-{
-    res.sendFile(path.join(__dirname, './public/notes.html'))
-});
 // POST request to add a note
 app.post('/api/notes', (req, res) => {
     // Log that a POST request was received
     console.info(`${req.method} request received to add a notes`);
   
     // Destructuring assignment for the items in req.body
-    const {title, text, id} = req.body;
+    const {title, text} = req.body;
   
     // If all the required properties are present
     if (title && text) {
@@ -63,6 +63,7 @@ app.post('/api/notes', (req, res) => {
   
           // Add a new notes
           parsedNotes.push(newNote);
+         
   
           // Write updated notes back to the file
           fs.writeFile(
@@ -86,6 +87,7 @@ app.post('/api/notes', (req, res) => {
     } else {
       res.status(500).json('Error in posting notes');
     }
+    updateDb();
   });
 
   app.delete("/api/notes/:id", function(req, res) {
@@ -101,8 +103,8 @@ app.post('/api/notes', (req, res) => {
               return true;
           });
       }
-
+  
 
   app.listen(PORT, () =>
     console.log(`App listening at http://localhost:${PORT} 🚀`)
-  );
+  )
