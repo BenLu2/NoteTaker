@@ -13,17 +13,13 @@ Please install NodeJS before use
 
 ## Installing
 
-You can via clone the Github link: https://github.com/BenLu2/NoteTaker.git
+You can via clone the Github link: https://github.com/BenLu2/Tech-Blog.git
 
 and run `npm install`, `node server.js` and open your browser at **localhost:3001** to access this app
 
-Or
-
-You can visit https://yudong-note-taker.herokuapp.com/notes directly to use this app from the Heroku website!
 
 ## Demo
 
-[![Demo Video](http://img.youtube.com/vi/XqVq3M1wNeQ/0.jpg)](http://www.youtube.com/watch?v=XqVq3M1wNeQ)
 
 
 - - -
